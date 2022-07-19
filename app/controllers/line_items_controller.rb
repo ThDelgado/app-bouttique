@@ -1,16 +1,8 @@
 class LineItemsController < ApplicationController
 
   before_action :set_line_item, only: %i[ show edit update destroy ]
-  before_action :set_car, only: [:create]
+  before_action :set_order, only: [:create]
  
-
-
-
-
-
-  def total_price
-    instrument.price.to_i * quantity.to_i
-  end
 
 
   # GET /line_items or /line_items.json
@@ -34,8 +26,8 @@ class LineItemsController < ApplicationController
 
   # POST /line_items or /line_items.json
   def create
-    @Product = Product.find(params[:products_id])
-    @line_item = @order.add_product(line_item_params)
+    product = Product.find(params[:products_id])
+    @line_item = @order.add_product(product)
 
     respond_to do |format|
       if @line_item.save

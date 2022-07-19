@@ -2,17 +2,6 @@ class OrdersController < ApplicationController
 rescue_from ActiveRecord::RecordNotFound, with: :invlaid_order
   before_action :set_order, only: %i[ show edit update destroy ]
 
-    def order_count_over_one
-    return total_order_items if total_order_items > 0
-  end
-
-  def total_order_items
-   total = @order.line_items.map(&:quantity).sum
-    return total if total > 0
-  end
-
-
-
 
 
   # GET /orders or /orders.json
@@ -80,11 +69,13 @@ rescue_from ActiveRecord::RecordNotFound, with: :invlaid_order
 
     # Only allow a list of trusted parameters through.
     def order_params
-      params.fetch(:order, {})
+      params.fetch(:order, {}).permit (:number, :state, :total)
     end
-
-    def invalid_order
+  # we use fetch cause we don't have an instance of an object, we cant use require .Fetch supplies  a default params for my uncreated  object(new #create actions)
+    
+  
+   def invalid_order
       logger.error "Attempt to access invalid order #{params[:id]}"
-      redirect_to root_path, notice: "That cart doesn't exist"
+      redirect_to root_path, notice: "That order doesn't exist"
     end
 end

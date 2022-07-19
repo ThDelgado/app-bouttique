@@ -4,14 +4,14 @@
   </div>
   <div class="column is-2">
     <figure class="is-128x128 image">
-      <%= image_tag(line_item.instrument.image_url(:thumb)) %>
+      <%= image_tag(line_item.product.image_url(:thumb)) %>
     </figure>
   </div>
   <div class="column is-9">
-    <strong><%= line_item.instrument.title %></strong>
+    <strong><%= line_item.product.title %></strong>
     <div class="columns align-items-center">
       <div class="content column is-9">
-        <%= truncate(line_item.instrument.description, length: 140) %>
+        <%= truncate(line_item.product.name, length: 140) %>
       </div>
       <div class="column is-3 has-text-right">
         <strong class="f4"><%= number_to_currency(line_item.total_price) %></strong>

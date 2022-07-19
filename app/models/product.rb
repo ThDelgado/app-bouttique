@@ -1,4 +1,5 @@
 class Product < ApplicationRecord
+    before_destroy :not_refereced_by_any_line_item
     has_many :line_items
     has_many :orders, through: :line_items
   
