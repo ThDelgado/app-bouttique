@@ -1,9 +1,13 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy ]
+  before_action :initialize_session
+  
+
 
   # GET /products or /products.json
   def index
     @products = Product.all.order("name desc")
+
   end
 
   # GET /products/1 or /products/1.json

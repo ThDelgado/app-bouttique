@@ -1,15 +1,56 @@
 class LineItemsController < ApplicationController
-
   before_action :set_line_item, only: %i[ show edit update destroy ]
-  before_action :set_order, only: [:create]
- 
+  before_action :update, only: %i[index]
 
+
+
+
+  def add_product (product_id,quantity, price)
+    @product = Product.find(product_id)
+    @quantity = quantity.to_i
+    @price = price.to_f
+    respond_to
+    if  @productr && @quantity > 0
+      OrderItem.create(product_id: @product, quanttity:@quantity, price: @price)
+    end
+  end
+
+  def update (product, quantity, price)
+    @product = product.to_i
+    @quantity = quantity.to_i
+    @price = price.to_f
+  
+
+    if @product && @quantity > 0
+      OrderItem.create(product_id: @product, quantity: @quantity, price: @price)
+      compute_total
+    end
+
+   
+  end
+  
+
+
+  def compute_total (price)
+    sum = 0
+    @price = []
+    @price.push price
+    @price.each do |item|
+      @total =sum += item.price
+    end
+    @total
+  end
+
+
+
+  
 
   # GET /line_items or /line_items.json
-  def index
-    
-    @line_items = LineItem.all
+  def index 
+    @order = current_order
   end
+   
+
 
   # GET /line_items/1 or /line_items/1.json
   def show
@@ -72,6 +113,6 @@ class LineItemsController < ApplicationController
     end
     # Only allow a list of trusted parameters through.
     def line_item_params
-      params.require(:line_item).permit(:product_id, :quantity )
+      params.require(:line_item).permit(:product_id, :quantity, :price )
     end
 end

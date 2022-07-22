@@ -10,13 +10,16 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def set_order
-    @order = Order.find(session[:order_id])
-    if @order <= 0
-      @order = Order.create(session[:order_id] = @order.id)
-    
+  def current_order
+    if current_user
+      @order = Order.where(user_id: current_user.id).where(state: "created").last
+      if @order.nil?
+        @order = Order.create(user: current_user, state: "created")
+      end
+      return @order
     end
   end
 
+  
 
 end

@@ -1,6 +1,5 @@
-<p id="notice"><%= notice %></p>
 
-<h1>Line Items</h1>
+  <h1>Line Items</h1>
 
 <table>
   <thead>
@@ -12,10 +11,11 @@
   </thead>
 
   <tbody>
-    <% @line_items.each do |line_item| %>
+    <%= @order.line_item.each do |line_item| %>
       <tr>
-        <td><%= line_item.product %></td>
-        <td><%= line_item.order %></td>
+        <td><%= line_item.product.price %></td>
+        <td><%= line_item.product.quantity %></td>
+        <td><%= line_item.product.price %></td>
         <td><%= link_to 'Show', line_item %></td>
         <td><%= link_to 'Edit', edit_line_item_path(line_item) %></td>
         <td><%= link_to 'Destroy', line_item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -25,50 +25,7 @@
 </table>
 
 <br>
-<div id="smart-button-container">
-      <div style="text-align: center;">
-        <div id="paypal-button-container"></div>
-      </div>
-    </div>
-  <script src="https://www.paypal.com/sdk/js?client-id=sb&enable-funding=venmo&currency=USD" data-sdk-integration-source="button-factory"></script>
-  <script>
-    function initPayPalButton() {
-      paypal.Buttons({
-        style: {
-          shape: 'rect',
-          color: 'gold',
-          layout: 'vertical',
-          label: 'paypal',
-          
-        },
 
-        createOrder: function(data, actions) {
-          return actions.order.create({
-            purchase_units: [{"amount":{"currency_code":"USD","value":1}}]
-          });
-        },
-
-        onApprove: function(data, actions) {
-          return actions.order.capture().then(function(orderData) {
-            
-            // Full available details
-            console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-
-            // Show a success message within this page, e.g.
-            const element = document.getElementById('paypal-button-container');
-            element.innerHTML = '';
-            element.innerHTML = '<h3>Thank you for your payment!</h3>';
-
-            // Or go to another URL:  actions.redirect('thank_you.html');
-            
-          });
-        },
-
-        onError: function(err) {
-          console.log(err);
-        }
-      }).render('#paypal-button-container');
-    }
-    initPayPalButton();
-  </script>
-<%= link_to 'New Line Item', new_line_item_path %>
+<br>
+<br>
+    <%= link_to 'Sigue comprando', products_path, class: 'button is-warning add-to-cart' %>
