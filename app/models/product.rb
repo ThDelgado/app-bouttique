@@ -1,10 +1,10 @@
 class Product < ApplicationRecord
-    before_destroy :not_refereced_by_any_line_item
-    has_many :line_items
-    has_many :orders, through: :line_items
+  before_destroy :not_refereced_by_any_line_item
+  has_many :line_items
+  has_many :orders, through: :line_items
   
 
-    has_one_attached :image
+  has_one_attached :image
 
   validates :name, :stock, :sku, :size, :brand, presence: true
   validates :price, length: { maximum: 7 }

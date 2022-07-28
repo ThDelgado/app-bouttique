@@ -1,1 +1,36 @@
-<h1>cart</h1>
+<div class="keep-shopping pv1 mt4 has-text-right">
+  <%= link_to 'Keep Shopping', products, class: 'button is-light' %>
+</div>
+<hr />
+  
+<section class="section">
+  <div class="columns align-items-center">
+    <% @order.order_items.includes(:product).each do |item| %>
+    <div class="column is-1">
+      <%= item.quantity %>
+    </div>
+
+    <div class="column is-2">
+      <figure class="is-128x128 image">
+        <%= image_tag(item.product.image) %>
+      </figure>
+    </div>
+    <div class="column is-9">
+      <strong><%= item.produc.name %></strong>
+      <div class="columns align-items-center">
+        <div class="column is-3 has-text-right">
+          <strong class="f4"><%= number_to_currency(item.price) %></strong>
+        </div>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column">
+        <%= button_to 'Empty Cart', @cart, method: :delete, data: { confirm: "Are you sure? " }, class: "button is-danger" %>
+      </div>
+      <div class="column total has-text-right">
+        <h4 class="title is-4">
+          <span class="f5 has-text-grey">Total:</span> <%= number_to_currency(@cart.total_price) %>
+        </h4>
+      </div>
+    </div>
+</section>
