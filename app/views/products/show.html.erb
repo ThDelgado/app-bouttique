@@ -24,12 +24,13 @@
       <div class="column is-3 is-offset-1">
         <div class="bg-white pa4 border-radius-3">
           <h4 class="title is-5 has-text-centered"><%= number_to_currency @product.price*1.00 %></h4>
-          <%= form_for :cart, url: carts_path, method: :put do |f| %>
-            <%= f.hidden_field :product_id, value: product.id %>
+          <%= form_for :cart, url: cart_path, method: :put do |f| %>
+            <%= f.hidden_field :product_id, value: @product.id %>
             <%= f.hidden_field :quantity, value: 1 %>
             <%= f.submit "Add to cart",class: 'button is-light' %>
           <% end %>
         </div>
+        <%= link_to  'Ver productos', root_path, class: "button is-light" %>
       </div>
     </div>
     

@@ -4,9 +4,12 @@ Rails.application.routes.draw do
     registration: 'admins/registrations'
    }
   resources :line_items
-  
+  authenticate :admin do
     resources :orders
-    resources :products
+    resources :products, except: [:index, :show]
+  end
+
+  resources :products, only: [:index, :show]
   
   resource :cart, only: [:show, :update]
 
